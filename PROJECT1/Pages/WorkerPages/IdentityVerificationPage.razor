@@ -1,0 +1,38 @@
+﻿@page "/identityverificationpage"
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ContextForDB dbcontext
+@inject NavigationManager nv
+@inject ProtectedLocalStorage storage
+
+<MudItem Style="text-align:center;" md="12">
+    <p>Enter your access code to begin work</p>
+    <p><MudInput @bind-Value="@providedcode" T="string" Variant="@Variant.Filled"></MudInput></p>
+    <p> <MudButton OnClick="@Verify" Variant="@Variant.Filled">Verify</MudButton></p>
+    <p style="color:red">@error</p>
+</MudItem>
+
+@code
+{
+    string providedcode;
+     
+    string error;
+     
+    async Task Verify()
+    {  
+        try
+        {
+            var user =  dbcontext.FarmWorkersTable.ToList().First(w => w.WorkerAccessCode == providedcode);
+
+            if (user != null)
+            {
+              await storage.SetAsync("userid", user.Id);
+                nv.NavigateTo("/logworkpage");  
+            } 
+        }
+        catch (Exception e)
+        {
+            error = "Bad code";
+        }
+         
+    }
+}

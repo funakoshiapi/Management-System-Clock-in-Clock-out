@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[WorkLogsTable]
+(
+	[Id] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [Job] NVARCHAR(50) NOT NULL, 
+    [Worker] NVARCHAR(50) NOT NULL, 
+    [DateStarted] DATETIME NOT NULL, 
+    [DateEnded] DATETIME NULL, 
+    [Building] NVARCHAR(50) NOT NULL
+)

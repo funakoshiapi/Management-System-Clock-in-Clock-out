@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="manningtestapp" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Main\ Files\\Conficiens\ solutio\\manning\ stuff\\blazor\ serverside\ project\\vs\ projects\\project\ 5\\PROJECT1\\PROJECT1\\obj\\Release\\net6\.0\\PubTmp\\Out\\$" />
+  </parameter>
+</parameters>

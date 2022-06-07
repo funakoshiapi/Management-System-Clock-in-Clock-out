@@ -1,0 +1,28 @@
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+<MudThemeProvider Theme="@theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@code {
+            MudTheme theme = new MudTheme()
+            {
+                Palette = new Palette()
+                {
+                    AppbarText = new MudBlazor.Utilities.MudColor(255, 255, 255, 1),
+                    AppbarBackground = new MudBlazor.Utilities.MudColor(57, 162, 37, 0.8),
+                    Primary = new MudBlazor.Utilities.MudColor(57, 162, 37, 0.8)
+        }
+    };
+
+}

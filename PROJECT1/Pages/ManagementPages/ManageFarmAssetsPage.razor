@@ -1,0 +1,235 @@
+﻿@page "/managefarmassetspage"
+@inject ContextForDB dbcontext
+<MudItem md="12">
+    <MudTable Items="@FarmWorkers" Hover="true">
+        <HeaderContent>
+            <MudTh>Worker Id</MudTh>
+            <MudTh>Worker name</MudTh>
+            <MudTh>Worker access code</MudTh>
+            <MudTh>Date added</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Worker Id">@context.Id.ToString()</MudTd>
+            <MudTd DataLabel="Worker name">@context.FirstName</MudTd>
+            <MudTd DataLabel="Worker access code">@context.LastName</MudTd>
+            <MudTd DataLabel="Date added">@context.DateAdded</MudTd>
+            <MudTd></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{10, 20}" />
+        </PagerContent>
+        <FooterContent>
+
+        </FooterContent>
+    </MudTable>
+
+    <p class="inputdescription_p">Add new worker</p>
+    <p class="input_p">
+        First name: <MudInput id="input_firstname" Variant="@Variant.Outlined" @bind-Value="@NewFarmWorkersRecord.FirstName" T="string"></MudInput>
+        Last name: <MudInput id="input_lastname" Variant="@Variant.Outlined" @bind-Value="@NewFarmWorkersRecord.LastName" T="string"></MudInput>
+        <MudButton id="btadd1" @onclick="@InsertNewWorker">Add</MudButton>
+    </p>
+    <p id="p_success1" style="color: green; text-align: center;">@success_addneworker</p>
+    <p  style="color: red; text-align: center;">@failed_addneworker</p>
+</MudItem>
+
+<MudItem md="6">
+    <MudTable Items="@FarmJobs" Hover="true">
+        <HeaderContent>
+            <MudTh>Job Id</MudTh>
+            <MudTh>Job title</MudTh>
+            <MudTh>Date added</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Job Id">@context.Id.ToString()</MudTd>
+            <MudTd DataLabel="Job title">@context.JobTitle</MudTd>
+            <MudTd DataLabel="Date added">@context.DateAdded</MudTd>
+            <MudTd></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{10, 20}" />
+        </PagerContent>
+        <FooterContent>
+
+        </FooterContent>
+    </MudTable>
+    <p class="inputdescription_p">Add new job</p>
+    <p class="input_p">
+        Job title:  <MudInput id="input_jobtitle" Variant="@Variant.Outlined" @bind-Value="@NewFarmJobsRecord.JobTitle" T="string"></MudInput>
+        <MudButton id="btadd2" @onclick="@InsertNewJob">Add</MudButton>
+    </p>
+    <p id="p_success2" style="color:green;text-align:center;">@success_addnewjob</p>
+    <p  style="color: red; text-align: center;">@failed_addnewjob</p>
+</MudItem>
+
+<MudItem md="6">
+    <MudTable Items="@FarmBuildings" Hover="true">
+        <HeaderContent>
+            <MudTh>Building Id</MudTh>
+            <MudTh>Building name</MudTh>
+            <MudTh>Date added</MudTh>
+            <MudTh></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Building Id">@context.Id.ToString()</MudTd>
+            <MudTd DataLabel="Building title">@context.BuildingTitle</MudTd>
+            <MudTd DataLabel="Date added">@context.DateAdded</MudTd>
+            <MudTd></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{10, 20}" />
+        </PagerContent>
+        <FooterContent>
+
+        </FooterContent>
+    </MudTable>
+
+    <p class="inputdescription_p">Add new building</p>
+    <p class="input_p">
+        Building title:   <MudInput id="input_buildingtitle"   Variant="@Variant.Outlined" @bind-Value="@NewFarmBuildingsRecord.BuildingTitle" T="string"></MudInput>
+        <MudButton id="btadd3" @onclick="@InsertNewBuilding">Add</MudButton>
+    </p>
+    <p id="p_success3" style="color: green; text-align: center;">@success_addnewbuilding</p>
+    <p  style="color: red; text-align: center;">@failed_addnewbuilding</p>
+</MudItem>
+
+
+@code {
+    #region Data for display
+    List<TableModels.FarmBuildingsTable> FarmBuildings = new List<TableModels.FarmBuildingsTable>();
+    List<TableModels.FarmWorkersTable> FarmWorkers = new List<TableModels.FarmWorkersTable>();
+    List<TableModels.FarmJobsTable> FarmJobs = new List<TableModels.FarmJobsTable>();
+    #endregion
+
+    #region New data
+    TableModels.FarmWorkersTable NewFarmWorkersRecord = new TableModels.FarmWorkersTable() { Id = Guid.NewGuid(), DateAdded = DateTime.UtcNow, WorkerAccessCode = Guid.NewGuid().ToString() };
+    TableModels.FarmBuildingsTable NewFarmBuildingsRecord = new TableModels.FarmBuildingsTable() { Id = Guid.NewGuid(), DateAdded = DateTime.UtcNow };
+    TableModels.FarmJobsTable NewFarmJobsRecord = new TableModels.FarmJobsTable() { Id = Guid.NewGuid(), DateAdded = DateTime.UtcNow };
+    #endregion
+
+    #region Success/Error messages
+    string failed_addneworker;
+    string failed_addnewjob;
+    string failed_addnewbuilding;
+
+    string success_addneworker;
+    string success_addnewjob;
+    string success_addnewbuilding;
+    #endregion
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            FarmBuildings = dbcontext.FarmBuildingsTable.ToList();
+            FarmWorkers = dbcontext.FarmWorkersTable.ToList();
+            FarmJobs = dbcontext.FarmJobsTable.ToList();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+        return Task.CompletedTask;
+    }
+
+
+    #region Insert new data
+
+    public async Task InsertNewWorker()
+    {
+        try
+        {
+            failed_addneworker = null;
+
+            success_addneworker = null;
+
+
+            var result = await dbcontext.FarmWorkersTable.AddAsync(NewFarmWorkersRecord);
+            if (result.State == Microsoft.EntityFrameworkCore.EntityState.Added)
+            {
+                int changes = await dbcontext.SaveChangesAsync();
+                if (changes == 1)
+                {
+                    FarmWorkers.Add(NewFarmWorkersRecord);
+                    NewFarmWorkersRecord = new TableModels.FarmWorkersTable() { Id = Guid.NewGuid(), DateAdded = DateTime.UtcNow, WorkerAccessCode = Guid.NewGuid().ToString() };
+                    success_addneworker = "New worker added";
+                }
+                else
+                {
+                    failed_addneworker = "Failed to add a worker";
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            failed_addneworker = "Failed to add a worker";
+        }
+    }
+
+    public async Task InsertNewBuilding()
+    {
+        try
+        {
+            failed_addnewbuilding = null;
+
+            success_addnewbuilding = null;
+
+            var result = await dbcontext.FarmBuildingsTable.AddAsync(NewFarmBuildingsRecord);
+            if (result.State == Microsoft.EntityFrameworkCore.EntityState.Added)
+            {
+                int changes = await dbcontext.SaveChangesAsync();
+                if (changes == 1)
+                {
+                    FarmBuildings.Add(NewFarmBuildingsRecord);
+                    NewFarmBuildingsRecord = new TableModels.FarmBuildingsTable() { Id = Guid.NewGuid(), DateAdded = DateTime.UtcNow };
+                    success_addnewbuilding = "New building added";
+                }
+                else
+                {
+                    failed_addnewbuilding = "Failed to add a building";
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            failed_addnewbuilding = "Failed to add a building";
+        }
+    }
+
+    public async Task InsertNewJob()
+    {
+        try
+        {
+            failed_addnewjob = null;
+
+            success_addnewjob = null;
+
+            var result = await dbcontext.FarmJobsTable.AddAsync(NewFarmJobsRecord);
+            if (result.State == Microsoft.EntityFrameworkCore.EntityState.Added)
+            {
+                int changes = await dbcontext.SaveChangesAsync();
+                if (changes == 1)
+                {
+                    FarmJobs.Add(NewFarmJobsRecord);
+                    NewFarmJobsRecord = new TableModels.FarmJobsTable() { Id = Guid.NewGuid(), DateAdded = DateTime.UtcNow };
+                    success_addnewjob = "New job added";
+                }
+                else
+                {
+                    failed_addnewjob = "Failed to add a job";
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            failed_addnewjob = "Failed to add a job";
+        }
+    }
+
+    #endregion
+
+
+}

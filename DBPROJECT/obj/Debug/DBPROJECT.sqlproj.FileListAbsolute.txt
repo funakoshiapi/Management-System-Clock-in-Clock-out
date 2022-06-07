@@ -1,0 +1,32 @@
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.dacpac
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.dll
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.pdb
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.sqlproj.AssemblyReference.cache
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\obj\Debug\Model.xml
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\obj\Debug\refactor.xml
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\obj\Debug\postdeploy.sql
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\obj\Debug\predeploy.sql
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.dll
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 2\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.pdb
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.dacpac
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.dll
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.pdb
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.sqlproj.AssemblyReference.cache
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\obj\Debug\Model.xml
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\obj\Debug\refactor.xml
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\obj\Debug\postdeploy.sql
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\obj\Debug\predeploy.sql
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.dll
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 3\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.pdb
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 5\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.dacpac
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 5\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.dll
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 5\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.pdb
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 5\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.sqlproj.AssemblyReference.cache
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 5\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.dll
+C:\Main Files\Conficiens solutio\manning stuff\blazor serverside project\vs projects\project 5\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.pdb
+C:\Users\fsilva\Desktop\live-projects\management sytem\part4\PROJECT1\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.dacpac
+C:\Users\fsilva\Desktop\live-projects\management sytem\part4\PROJECT1\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.dll
+C:\Users\fsilva\Desktop\live-projects\management sytem\part4\PROJECT1\PROJECT1\DBPROJECT\bin\Debug\DBPROJECT.pdb
+C:\Users\fsilva\Desktop\live-projects\management sytem\part4\PROJECT1\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.sqlproj.AssemblyReference.cache
+C:\Users\fsilva\Desktop\live-projects\management sytem\part4\PROJECT1\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.dll
+C:\Users\fsilva\Desktop\live-projects\management sytem\part4\PROJECT1\PROJECT1\DBPROJECT\obj\Debug\DBPROJECT.pdb

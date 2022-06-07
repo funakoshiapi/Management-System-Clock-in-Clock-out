@@ -1,0 +1,98 @@
+﻿@page "/assignfarmassetspage"
+@inject ContextForDB dbcontext
+
+<MudItem md="4">
+    <p>Worker</p>
+    <MudSelect Variant="@Variant.Filled" T="string" @bind-Value="@NewAssignment.WorkerId">
+        @foreach (var worker in FarmWorkers)
+        {
+        <MudSelectItem Value="@worker.Id.ToString()">@worker.FirstName @worker.LastName</MudSelectItem>
+        } 
+    </MudSelect> 
+</MudItem>
+<MudItem md="4">
+    <p>Job</p>
+    <MudSelect Variant="@Variant.Filled" T="string" @bind-Value="@NewAssignment.JobId">
+        @foreach (var job in FarmJobs)
+        {
+            <MudSelectItem Value="@job.Id.ToString()">@job.JobTitle</MudSelectItem>
+        }
+    </MudSelect> 
+</MudItem>
+<MudItem md="4">
+    <p>Building</p>
+    <MudSelect Variant="@Variant.Filled" T="string" @bind-Value="@NewAssignment.BuildingId" >
+        @foreach (var building in FarmBuildings)
+        {
+            <MudSelectItem Value="@building.Id.ToString()">@building.BuildingTitle</MudSelectItem>
+        }
+    </MudSelect> 
+</MudItem>
+
+<MudItem Style="text-align:center;" md="12">
+    <MudButton Variant="@Variant.Filled" @onclick="@AddAssignment" >Add assignment</MudButton>
+    <p style="color:green;">@success_msg</p>
+    <p style="color:red;">@failed_msg</p>
+</MudItem>
+@code {
+    #region Data for display
+    List<TableModels.FarmBuildingsTable> FarmBuildings = new List<TableModels.FarmBuildingsTable>();
+    List<TableModels.FarmWorkersTable> FarmWorkers = new List<TableModels.FarmWorkersTable>();
+    List<TableModels.FarmJobsTable> FarmJobs = new List<TableModels.FarmJobsTable>();
+    #endregion
+
+    TableModels.AssignmentsTable NewAssignment = new TableModels.AssignmentsTable() { Id = Guid.NewGuid(), DateAdded = DateTime.UtcNow  };
+
+
+    #region Success/failure messages
+
+    string failed_msg;
+    string success_msg;
+
+    #endregion
+
+
+    protected override Task OnInitializedAsync()
+    {
+        try
+        {
+            FarmBuildings = dbcontext.FarmBuildingsTable.ToList();
+            FarmWorkers = dbcontext.FarmWorkersTable.ToList();
+            FarmJobs = dbcontext.FarmJobsTable.ToList();
+        }
+        catch (Exception e)
+        {
+
+        }
+
+        return Task.CompletedTask;
+    }
+
+    public async Task AddAssignment()
+    {
+        try
+        {
+            failed_msg = null;
+            success_msg = null;
+
+            var result = await dbcontext.AssignmentsTable.AddAsync(NewAssignment);
+            if (result.State == Microsoft.EntityFrameworkCore.EntityState.Added)
+            {
+                int changes = await dbcontext.SaveChangesAsync();
+                if (changes == 1)
+                {
+                    success_msg = "Assignment added";
+                }
+                else
+                {
+                    failed_msg = "Something went wrong";
+                }
+                NewAssignment = new TableModels.AssignmentsTable() { Id = Guid.NewGuid(), DateAdded = DateTime.UtcNow  };
+            }
+        }
+        catch (Exception e)
+        {
+            failed_msg = "Something went wrong";
+        }
+    }
+}

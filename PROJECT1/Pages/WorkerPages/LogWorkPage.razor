@@ -1,0 +1,30 @@
+﻿@page "/logworkpage"
+
+ 
+
+@if (is_working)
+{
+    <CurrentWorkComponent OnEndJob="@(() =>  { is_working = false; })"></CurrentWorkComponent>
+
+}
+else
+{
+    <BeginWorkComponent OnBegin="@(() =>  { is_working = true; })"></BeginWorkComponent>
+}
+
+
+@code {
+    bool is_working = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            
+        }
+    }
+}

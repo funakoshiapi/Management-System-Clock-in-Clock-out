@@ -1,0 +1,71 @@
+﻿@page "/overviewpage"
+@inject ContextForDB dbcontext
+
+<MudItem md="4">
+   <MudDateRangePicker @bind-DateRange="range" ></MudDateRangePicker>
+   <MudButton OnClick="@Search">Search</MudButton>
+</MudItem>
+<MudItem md="8">
+   
+    <MudTable Items="@Logs" Hover="true">
+        <HeaderContent>
+            <MudTh>Id</MudTh> 
+            <MudTh>Building</MudTh>
+            <MudTh>Date started</MudTh>
+            <MudTh>Date ended</MudTh>
+            <MudTh>Time spent</MudTh>
+            <MudTh>Job</MudTh>
+            <MudTh>Worker</MudTh> 
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd  >@context.Id.ToString()</MudTd> 
+            <MudTd  >@dbcontext.FarmBuildingsTable.First(fb => fb.Id.ToString() == context.Building).BuildingTitle</MudTd> 
+            <MudTd  >@context.DateStarted</MudTd> 
+            <MudTd  >@context.DateEnded</MudTd> 
+            <ErrorBoundary>
+                      <MudTd  >@context.DateEnded.Value.Subtract(context.DateStarted).TotalHours</MudTd> 
+            </ErrorBoundary> 
+            <MudTd  >@dbcontext.FarmJobsTable.First(fj => fj.Id.ToString() == context.Job).JobTitle</MudTd> 
+            <MudTd  >@dbcontext.FarmWorkersTable.First(fw => fw.Id.ToString() == context.Worker).FirstName</MudTd> 
+            <MudTd></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{10, 20}" />
+        </PagerContent>
+        <FooterContent>
+
+        </FooterContent>
+    </MudTable>
+
+    
+</MudItem>
+
+@code {
+    List<TableModels.WorkLogsTable> Logs = new List<TableModels.WorkLogsTable>();
+
+    DateRange range = new DateRange() { Start = DateTime.UtcNow.Subtract(new TimeSpan(10, 0, 0, 0)), End = DateTime.UtcNow };
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Logs = dbcontext.WorkLogsTable.Where(wl => wl.DateEnded.HasValue && wl.DateEnded <= range.End && wl.DateStarted >= range.Start).ToList(); 
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+    async Task Search()
+    { 
+        try
+        {
+            Logs = dbcontext.WorkLogsTable.Where(wl => wl.DateEnded.HasValue && wl.DateEnded <= range.End && wl.DateStarted >= range.Start).ToList(); 
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+}

@@ -1,0 +1,88 @@
+﻿@page "/activeworkpage"
+@inject ContextForDB dbcontext
+<MudItem md="12">
+    <p>Next update in @timetonextupdate seconds <MudButton>Refresh</MudButton></p>
+    <p style="color:red">@updatererror</p>
+    <MudTable Items="@Logs" Hover="true">
+        <HeaderContent>
+            <MudTh>Id</MudTh> 
+            <MudTh>Building</MudTh>
+            <MudTh>Date started</MudTh>
+            <MudTh>Job</MudTh>
+            <MudTh>Worker</MudTh> 
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd  >@context.Id.ToString()</MudTd> 
+            <MudTd  >@dbcontext.FarmBuildingsTable.First(fb => fb.Id.ToString() == context.Building).BuildingTitle</MudTd> 
+            <MudTd  >@context.DateStarted</MudTd> 
+            <MudTd  >@dbcontext.FarmJobsTable.First(fj => fj.Id.ToString() == context.Job).JobTitle</MudTd> 
+            <MudTd  >@dbcontext.FarmWorkersTable.First(fw => fw.Id.ToString() == context.Worker).FirstName</MudTd> 
+            <MudTd></MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{10, 20}" />
+        </PagerContent>
+        <FooterContent>
+
+        </FooterContent>
+    </MudTable>
+
+    
+</MudItem>
+
+@code {
+    List<TableModels.WorkLogsTable> Logs = new List<TableModels.WorkLogsTable>();
+
+    int timetonextupdate = 60;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Logs = dbcontext.WorkLogsTable.Where(wl => !wl.DateEnded.HasValue).ToList();
+
+            _ = Updater();
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+    string updatererror;
+
+    async Task Updater()
+    {
+        try
+        {
+            while (true)
+            {
+                updatererror = null;
+                timetonextupdate = 60; 
+                StateHasChanged();
+                while (timetonextupdate > 0)
+                {
+                    timetonextupdate--;
+                    StateHasChanged();
+                    await Task.Delay(1000);
+                }
+
+                try
+                {
+                    Logs = dbcontext.WorkLogsTable.Where(wl => !wl.DateEnded.HasValue).ToList();
+                }
+                catch (Exception e)
+                {
+                    updatererror = "Failed to refresh, if it keeps failing refresh the page";
+                }
+               
+
+            }
+           
+        }
+        catch (Exception e)
+        {
+              updatererror = "Failed to refresh, refresh the page";
+        }
+    }
+}

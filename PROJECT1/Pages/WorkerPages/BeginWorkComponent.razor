@@ -1,0 +1,105 @@
+﻿@inject ContextForDB dbcontext
+
+<MudItem md="12">
+    
+</MudItem>
+<MudItem md="6">
+    <p>Job</p>
+    <MudSelect @bind-Value="@SelectedJob" Variant="@Variant.Filled" T="string">
+         @foreach (var item in AvailableJobs)
+        {
+               <MudSelectItem Value="@(item.Key)">@item.Value</MudSelectItem>
+        } 
+    </MudSelect> 
+</MudItem>
+<MudItem md="6">
+    <p>Building</p>
+    <MudSelect @bind-Value="@SelectedBuilding" Variant="@Variant.Filled" T="string">
+        @foreach (var item in AvailableBuildings)
+        {
+            <MudSelectItem Value="@(item.Key)">@item.Value</MudSelectItem>
+        }
+        
+    </MudSelect> 
+</MudItem>
+
+<MudItem md="12" Style="text-align:center;">
+    <MudButton OnClick="@Begin" Variant="@Variant.Filled">Begin work</MudButton>
+    <p style="color:red">@error</p> 
+</MudItem>
+
+@code
+{
+    [Parameter]
+    public EventCallback OnBegin { get; set; }
+
+    Dictionary<string, string> AvailableJobs = new Dictionary<string, string>();
+    Dictionary<string, string> AvailableBuildings = new Dictionary<string, string>();
+
+    
+    [Parameter]
+    public string UserId { get; set; }
+
+    string SelectedJob;
+    string SelectedBuilding;
+
+    string error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var assignments = dbcontext.AssignmentsTable.Where(a => a.WorkerId ==  UserId );
+
+            foreach (var assignment in assignments.ToList().DistinctBy(a => a.JobId))
+            {
+                AvailableJobs.Add(assignment.JobId , dbcontext.FarmJobsTable.First(j => j.Id.ToString() == assignment.JobId).JobTitle);
+            }
+
+            foreach (var assignment in assignments.ToList().DistinctBy(a => a.BuildingId))
+            {
+                AvailableBuildings.Add(assignment.BuildingId , dbcontext.FarmBuildingsTable.First(b => b.Id.ToString() == assignment.BuildingId).BuildingTitle);
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+
+    async Task Begin()
+    {
+        try
+        {  
+            if (!dbcontext.WorkLogsTable.ToList().Any(w => w.DateEnded == null))
+            {
+                    error = null; 
+
+                    var result = await dbcontext.WorkLogsTable.AddAsync(new TableModels.WorkLogsTable() {  Building = SelectedBuilding.ToString(), Job = SelectedJob.ToString(), Worker =  UserId , DateStarted = DateTime.UtcNow });
+                    if (result.State == Microsoft.EntityFrameworkCore.EntityState.Added)
+                    {
+                        int changes = await dbcontext.SaveChangesAsync();
+                        if (changes == 1)
+                        {
+                            await OnBegin.InvokeAsync();
+                        }
+                        else
+                        {
+                            error = "Something went wrong";
+                        }
+                    }
+                    else
+                    {
+                         error = "Something went wrong"; 
+                    } 
+            }
+        }
+        catch (Exception e)
+        {
+             error = "Something went wrong";
+        }
+        
+    }
+}
+
+ 

@@ -1,0 +1,22 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       [dbo].[FarmBuildingsTable]
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       The type for column Id in table [dbo].[FarmBuildingsTable] is currently  INT NOT NULL but is being changed to 
+         UNIQUEIDENTIFIER NOT NULL. There is no implicit or explicit conversion.
+
+** User actions
+     Drop
+       unnamed constraint on [dbo].[FarmBuildingsTable] (Default Constraint)
+       unnamed constraint on [dbo].[FarmWorkersTable] (Default Constraint)
+     Table rebuild
+       [dbo].[FarmBuildingsTable] (Table)
+
+** Supporting actions
+
+The type for column Id in table [dbo].[FarmBuildingsTable] is currently  INT NOT NULL but is being changed to  UNIQUEIDENTIFIER NOT NULL. There is no implicit or explicit conversion.
+
